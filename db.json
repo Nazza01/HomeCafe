@@ -1,0 +1,54 @@
+{
+	"customers": [
+		{
+			"id": 0,
+			"name": "Nat",
+			"role": "admin"
+		},
+		{
+			"id": 1,
+			"name": "Sherri",
+			"role": "customer"
+		}
+	],
+	"orders": [
+		{
+			"orderedById": 0,
+			"orderedByName": "Nat",
+			"cart": [
+				{
+					"id": 0,
+					"item": "cappuccino",
+					"size": "large",
+					"extras": "no"
+				},
+				{
+					"id": 1,
+					"item": "toast",
+					"size": "small (1pc)",
+					"extra": "yes",
+					"extraNote": "double heaping of nutella"
+				}
+			]
+		},
+		{
+			"orderedById": 1,
+			"orderedByName": "Sherri",
+			"cart": [
+				{
+					"id": 0,
+					"item": "latte",
+					"size": "small",
+					"extra": "yes",
+					"extraNote": "snug afterwards?"
+				},
+				{
+					"id": 1,
+					"item": "bacon buttie",
+					"size": "regular",
+					"extras": "no"
+				}
+			]
+		}
+	]
+}
