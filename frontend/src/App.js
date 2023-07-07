@@ -1,25 +1,26 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import Cart from "./components/Cart";
-import Login from "./components/Login";
-import OrderHistory from "./components/OrderHistory";
+import { Col, Layout, Row } from "antd";
+import AppHeader from "./components/Common/AppHeader";
+import AppRoutes from "./Routes";
+const { Header, Content } = Layout;
 
-function App() {
+const App = () => {
 	return (
-		<div>
-			<Router>
-				<Navbar />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/cart" element={<Cart />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/order-history" element={<OrderHistory />} />
-				</Routes>
-			</Router>
-		</div>
+		<Layout>
+			<Row gutter={[0, 32]}>
+				<Col span={24}>
+					<Header>
+						<AppHeader />
+					</Header>
+				</Col>
+				<Col span={22} offset={1}>
+					<Content>
+						<AppRoutes />
+					</Content>
+				</Col>
+			</Row>
+		</Layout>
 	);
-}
+};
 
 export default App;
