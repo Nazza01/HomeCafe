@@ -1,9 +1,11 @@
+# Get rid of node_modules alltogether to eliminate commit errors
+**/node_modules
+
 #############						#############
 #############		Frontend		#############
 #############	React / Bootstrap	#############
 #############						#############
 # Dependency directories
-/node_modules
 /.pnp
 .pnp.js
 
@@ -38,7 +40,6 @@ Thumbs.db
 #############						#############
 
 # Dependency directories
-/node_modules
 /.pnp
 .pnp.js
 
