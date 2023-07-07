@@ -6,11 +6,12 @@ import { useAuthContext } from "../../context/AuthContext";
 import { removeToken } from "../../helpers";
 
 const AppHeader = () => {
-	const { user } = useAuthContext();
+	const { user, setUser } = useAuthContext();
 	const navigate = useNavigate();
 
 	const handleLogout = () => {
 		removeToken();
+		setUser();
 		navigate("/signin", { replace: true });
 	};
 
