@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "menus",
+  "collectionName": "coffee_beans",
   "info": {
-    "singularName": "menu",
-    "pluralName": "menus",
-    "displayName": "Menu",
+    "singularName": "coffee-bean",
+    "pluralName": "coffee-beans",
+    "displayName": "CoffeeBean",
     "description": ""
   },
   "options": {
@@ -12,13 +12,13 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "Name": {
       "type": "string"
     },
-    "description": {
-      "type": "richtext"
+    "DateBrought": {
+      "type": "date"
     },
-    "image": {
+    "Image": {
       "type": "media",
       "multiple": true,
       "required": false,
@@ -29,9 +29,8 @@
         "audios"
       ]
     },
-    "itemId": {
-      "type": "uid",
-      "targetField": "name"
+    "BroughtFrom": {
+      "type": "richtext"
     }
   }
 }

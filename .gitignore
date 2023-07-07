@@ -1,6 +1,41 @@
-#################			#################
-#################	STRAPI	#################
-#################			#################
+#############						#############
+#############		Frontend		#############
+#############	React / Bootstrap	#############
+#############						#############
+# Dependency directories
+/node_modules
+/.pnp
+.pnp.js
+
+# Build directories
+/build
+/dist
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Editor directories and files
+.idea
+.vscode
+*.sublime-*
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+#############						#############
+#############		Backend			#############
+#############		Strapi			#############
+#############						#############
 
 # Dependency directories
 /node_modules
