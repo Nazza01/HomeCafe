@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
+import Login from "./components/Login";
 import OrderHistory from "./components/OrderHistory";
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/cart" element={<Cart />} />
-					<Route path="/past-orders" element={<OrderHistory />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/order-history" element={<OrderHistory />} />
 				</Routes>
 			</Router>
 		</div>
