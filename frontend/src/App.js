@@ -2,16 +2,14 @@ import React from "react";
 import { Col, Layout, Row } from "antd";
 import AppHeader from "./components/Common/AppHeader";
 import AppRoutes from "./Routes";
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const App = () => {
 	return (
 		<Layout>
 			<Row gutter={[0, 32]}>
 				<Col span={24}>
-					<Header>
-						<AppHeader />
-					</Header>
+					<AppHeader />
 				</Col>
 				<Col span={22} offset={1}>
 					<Content>

@@ -1,7 +1,6 @@
-import { Button, Space } from "antd";
 import React from "react";
-import { CgWebsite } from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
+import { Button, Nav, Navbar, NavbarBrand, NavLink } from 'react-bootstrap';
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import { removeToken } from "../../helpers";
 
@@ -12,37 +11,51 @@ const AppHeader = () => {
 	const handleLogout = () => {
 		removeToken();
 		setUser();
-		navigate("/signin", { replace: true });
+		navigate("/logout", { replace: true });
 	};
 
 	return (
-		<Space className="header_space">
-			<Button className="header_space_brand" href="/" type="link">
-				<CgWebsite size={64} />
-			</Button>
-			<Space className="auth_buttons">
-				{user ? (
-					<>
-						<Button className="auth_button_login" href="/profile" type="link">
-							{user.username}
-						</Button>
-						<Button
-							className="auth_button_signUp"
-							type="primary"
-							onClick={handleLogout}
-						>
-							Logout
-						</Button>
-					</>
-				) : (
-					<>
-						<Button className="auth_button_login" href="/signin" type="link">
-							Login
-						</Button>
-					</>
-				)}
-			</Space>
-		</Space>
+		<Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
+			<Navbar.Toggle aria-controls="navbarScroll" data-bs-target="#navbarScroll" />
+			<Navbar.Collapse id="navbarScroll">
+				<Nav>
+					<NavLink eventKey="5" as={Link} to="/order-history">Order History</NavLink>
+					<NavLink eventKey="6" as={Link} to="/cart">Cart</NavLink>
+					<NavLink eventKey="7" as={Link} to="/menu">Menu</NavLink>
+				</Nav>
+			</Navbar.Collapse>
+			<NavbarBrand as={Link} to="/">HomeCafe</NavbarBrand>
+				<>
+					{user ? (
+							<>
+								<Button 
+									className="auth_button_login" 
+									href="/profile" 
+									type="link"
+								>
+									{user.username}
+								</Button>
+								<Button 
+									className="auth_button_logout" 
+									type="primary"
+									onClick={handleLogout}
+								>
+									Logout
+								</Button>
+							</>
+					) : (
+						<>
+							<Button 
+								className="auth_button_login"
+								href="/login" 
+								type="link"
+							>
+								Login
+							</Button>
+						</>
+					)}
+				</>
+		</Navbar>
 	);
 };
 

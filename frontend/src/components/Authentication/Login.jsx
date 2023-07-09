@@ -16,15 +16,12 @@ import useScreenSize from "../../hooks/useScreenSize";
 import { API } from "../../constants";
 import { setToken } from "../../helpers";
 
-const Signin = () => {
-	const { isDesktopView } = useScreenSize();
-	const navigate = useNavigate();
-
-	const { setUser } = useAuthContext();
-
+const Login = () => {
 	const [isLoading, setIsLoading] = useState(false);
-
 	const [error, setError] = useState("");
+	const { isDesktopView } = useScreenSize();
+	const { setUser } = useAuthContext();
+	const navigate = useNavigate();
 
 	const onFinish = async (values) => {
 		setIsLoading(true);
@@ -67,7 +64,7 @@ const Signin = () => {
 		<Fragment>
 			<Row align="middle">
 				<Col span={isDesktopView ? 8 : 24} offset={isDesktopView ? 8 : 0}>
-					<Card title="SignIn">
+					<Card title="Login">
 						{error ? (
 							<Alert
 								className="alert_error"
@@ -121,4 +118,4 @@ const Signin = () => {
 	);
 };
 
-export default Signin;
+export default Login;
