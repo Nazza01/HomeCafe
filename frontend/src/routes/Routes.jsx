@@ -6,6 +6,7 @@ import Cart from "../components/Common/Cart";
 import OrderHistory from "../components/Common/OrderHistory";
 import Profile from "../components/Authentication/Profile";
 import Login from "../components/Authentication/Login";
+import NotFound from "../components/Common/NoMatch";
 
 const AppRoutes = () => {
 	return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
 			<Route 
 				path="/menu" 
 				element={getToken() ? '' : <Navigate to="/menu" />} />
+			<Route path="*" element={<NotFound />} />
 		</Routes>
 	);
 };
