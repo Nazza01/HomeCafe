@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Card, Col, Form, Input, message, Row, Spin } from "antd";
 import { useAuthContext } from "../../context/AuthContext";
-import { API } from "../../constants/constants";
 import { useState } from "react";
-import { getToken } from "./AuthProvider/helpers";
+import { API } from "../../constants/constants";
+import { getToken } from "../../AuthProvider/helpers";
 
 const Profile = () => {
 	const [loading, setLoading] = useState(false);

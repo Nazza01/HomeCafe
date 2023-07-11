@@ -3,8 +3,8 @@ import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import useScreenSize from "../../hooks/useScreenSize";
+import { setToken } from "../../AuthProvider/helpers";
 import { API } from "../../constants/constants";
-import { setToken } from "./AuthProvider/helpers";
 
 const Login = () => {
 	const [isLoading, setIsLoading] = useState(false);

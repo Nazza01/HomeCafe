@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Layout, Row } from "antd";
 import AppHeader from "./components/Common/AppHeader";
-import AppRoutes from "./Routes";
+import AppRoutes from "./routes/Routes";
 const { Content } = Layout;
 
 const App = () => {

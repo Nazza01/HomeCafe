@@ -1,37 +1,26 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { getToken } from "../AuthProvider/helpers";
 import Home from "../components/Common/Home";
+import Cart from "../components/Common/Cart";
+import OrderHistory from "../components/Common/OrderHistory";
 import Profile from "../components/Authentication/Profile";
 import Login from "../components/Authentication/Login";
-import Cart from "../components/Common/Cart";
 
 const AppRoutes = () => {
 	return (
 		<Routes>
-			<Route element={<HomeLayout />}>
-				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Login />} />
-			</Route>
-			<Route path="/order" element={<ProtectedLayout />}>
-				<Route 
-					path="profile" 
-					element={<Profile />}
-				>
-					Profile
-				</Route>
-				<Route 
-					path="history" 
-					element={<History />}
-				>
-					History
-				</Route>
-				<Route 
-					path="cart" 
-					element={<Cart />}
-				>
-					Cart
-				</Route>
-			</Route>
+			<Route path="/" element={<Home />} />
+			<Route path="/login" element={<Login />} />
+			<Route
+				path="/profile"
+				element={getToken() ? <Profile /> : <Navigate to="/login" />}
+			/>
+			<Route path="/order-history" element={<OrderHistory />} />
+			<Route path="/cart" element={<Cart />} />
+			<Route 
+				path="/menu" 
+				element={getToken() ? '' : <Navigate to="/menu" />} />
 		</Routes>
 	);
 };

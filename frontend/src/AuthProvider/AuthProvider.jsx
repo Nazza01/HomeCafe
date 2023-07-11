@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { AuthContext } from "../../../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { message } from "antd";
-import { API, BEARER } from "../../../constants/constants";
+import { API, BEARER } from "../constants/constants";
 import { useEffect } from "react";
 import { getToken } from "./helpers";
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
 	const [userData, setUserData] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -46,5 +46,3 @@ const AuthProvider = ({ children }) => {
 		</AuthContext.Provider>
 	);
 };
-
-export default AuthProvider;
