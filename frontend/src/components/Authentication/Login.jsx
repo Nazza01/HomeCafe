@@ -1,20 +1,10 @@
-import {
-	Alert,
-	Button,
-	Card,
-	Col,
-	Form,
-	Input,
-	message,
-	Row,
-	Spin,
-} from "antd";
+import { Alert, Button, Card, Col, Form, Input, message, Row, Spin } from "antd";
 import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import useScreenSize from "../../hooks/useScreenSize";
-import { API } from "../../constants";
-import { setToken } from "../../helpers";
+import { API } from "../../constants/constants";
+import { setToken } from "./AuthProvider/helpers";
 
 const Login = () => {
 	const [isLoading, setIsLoading] = useState(false);

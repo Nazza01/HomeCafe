@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Nav, Navbar, NavbarBrand, NavLink } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
-import { removeToken } from "../../helpers";
+import { removeToken } from "../Authentication/AuthProvider/helpers";
 
 const AppHeader = () => {
 	const { user, setUser } = useAuthContext();

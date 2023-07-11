@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { message } from "antd";
-import { API, BEARER } from "../../../constants";
+import { API, BEARER } from "../../../constants/constants";
 import { useEffect } from "react";
-import { getToken } from "../../../helpers";
+import { getToken } from "./helpers";
 
 const AuthProvider = ({ children }) => {
 	const [userData, setUserData] = useState();
