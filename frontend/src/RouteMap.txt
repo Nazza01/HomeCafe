@@ -1,0 +1,17 @@
+
+VERSION 1.0
+Path									Component					Access Level	Function
+/ 										Home							Public				Displays login prompt if the user is not logged in
+/login 								Login							Public				Allows unauthenticated users to login and use the app
+
+/user									UserPATH					User					Authenticated User path
+/user/profile					Profile						User					Edit profile details
+/user/order-history		Order History			User					Order history page for previous orders
+/user/cart						Cart							User					Current items the user has added
+/user/menu						Menu							User					The menu on offer that the user can add to their cart
+
+
+VERSION 2.0 (otherwise can do it in backend management for adding users, etc)
+/admin								AdminPATH					Admin					Authenticated Admin path
+/admin/users					Users							Admin					Add/Remove/Update users profiles
+/admin/menu						AdminMenu					Admin					Add/Remove/Update current menu offerings
