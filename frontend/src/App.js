@@ -1,32 +1,50 @@
-import { Route, Routes } from "react-router-dom";
-import { ProtectedLayout } from "./components/ProtectedLayout";
+import {
+	Route,
+	createBrowserRouter,
+	createRoutesFromElements,
+	defer,
+} from "react-router-dom";
+
+import { AuthLayout } from "./components/AuthLayout";
+
 import { HomeLayout } from "./components/HomeLayout";
+import { HomePage } from "./pages/Home";
+import { LoginPage } from "./pages/Login";
 
-import Home from "./components/Home";
-import Login from "./components/Login";
+import { ProtectedLayout } from "./components/ProtectedLayout";
+import { ProfilePage } from "./pages/Profile";
+import { OrderHistoryPage } from "./pages/OrderHistory";
+import { CartPage } from "./pages/Cart";
+import { MenuPage } from "./pages/Menu";
+import { NotFoundPage } from "./pages/NotFound";
 
-import Profile from "./components/Profile";
-import OrderHistory from "./components/OrderHistory";
-import Cart from "./components/Cart";
-import Menu from "./components/Menu";
+import "./styles.css";
 
-const App = () => {
-	// Start here with using react router v6.4 data library APIs
-	return (
-		<Routes>
-			<Route element={<HomeLayout />}>
-				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Login />} />
-			</Route>
-
-			<Route path="/user" element={<ProtectedLayout />}>
-				<Route path="profile" element={<Profile />} />
-				<Route path="order-history" element={<OrderHistory />} />
-				<Route path="cart" element={<Cart />} />
-				<Route path="menu" element={<Menu />} />
-			</Route>
-		</Routes>
+const getUserData = () =>
+	new Promise((resolve) =>
+		setTimeout(() => {
+			const user = window.localStorage.getItem("user");
+			resolve(user);
+		}, 3000)
 	);
-};
 
-export default App;
+export const router = createBrowserRouter(
+	createRoutesFromElements(
+		<Route
+			element={<AuthLayout />}
+			loader={() => defer({ userPromise: getUserData() })}
+		>
+			<Route element={<HomeLayout />}>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/login" element={<LoginPage />} />
+			</Route>
+			<Route path="/user" element={<ProtectedLayout />}>
+				<Route path="profile" element={<ProfilePage />} />
+				<Route path="order-history" element={<OrderHistoryPage />} />
+				<Route path="cart" element={<CartPage />} />
+				<Route path="menu" element={<MenuPage />} />
+			</Route>
+			<Route path="*" element={<NotFoundPage />}></Route>
+		</Route>
+	)
+);

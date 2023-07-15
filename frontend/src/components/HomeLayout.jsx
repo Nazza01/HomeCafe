@@ -1,20 +1,24 @@
-import { Link, Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../hooks/AuthProvider";
+import { Navigate, useOutlet } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import { AppBar } from "./AppBar";
 
 export const HomeLayout = () => {
   const { user } = useAuth();
+  const outlet = useOutlet();
 
   if (user) {
-    return <Navigate to="/dashboard/profile" />;
+    return <Navigate to="/dashboard/profile" replace />;
   }
 
   return (
     <div>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-      </nav>
-      <Outlet />
+      <AppBar 
+        pages={[
+          { label: 'Home', path: "/"},
+          { label: 'Login', path: "/login"},
+        ]}
+      />
+      {outlet}
     </div>
   )
 };
