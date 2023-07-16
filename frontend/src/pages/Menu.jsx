@@ -1,6 +1,9 @@
-import { BasicPage } from "../components/BasicPage";
-import LocalCafeIcon from '@mui/icons-material/LocalCafe';
+import VerticalTab from "../components/VerticalTab"
 
-export const MenuPage = () => {
-  return <BasicPage title="Menu Page" icon={<LocalCafeIcon />} />;
+const MenuPage = () => {
+  return <div>
+    <VerticalTab></VerticalTab>
+  </div>;
 };
+
+export default MenuPage;

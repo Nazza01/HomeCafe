@@ -8,10 +8,8 @@ import {
   message,
   Row,
   Spin,
-  Typography,
 } from "antd";
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useScreenSize from "../hooks/useScreenSize";
 import { API } from "../constant";
@@ -52,7 +50,7 @@ const Login = () => {
 
         message.success(`Welcome back ${data.user.username}!`);
 
-        navigate("/user/profile", { replace: true });
+        navigate("/user/menu", { replace: true });
       }
     } catch (error) {
       console.error(error);
@@ -113,9 +111,6 @@ const Login = () => {
                 </Button>
               </Form.Item>
             </Form>
-            <Typography.Paragraph className="form_help_text">
-              New to Social Cards? <Link to="/signup">Sign Up</Link>
-            </Typography.Paragraph>
           </Card>
         </Col>
       </Row>

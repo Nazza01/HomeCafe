@@ -32,6 +32,13 @@
     "itemId": {
       "type": "uid",
       "targetField": "name"
+    },
+    "menuType": {
+      "type": "enumeration",
+      "enum": [
+        "Coffee",
+        "Desserts"
+      ]
     }
   }
 }
