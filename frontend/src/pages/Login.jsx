@@ -1,72 +1,126 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { useAuth } from "../hooks/useAuth";
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  message,
+  Row,
+  Spin,
+  Typography,
+} from "antd";
+import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useScreenSize from "../hooks/useScreenSize";
+import { API } from "../constant";
+import { setToken } from "../hooks/useLocalStorage";
+import { useAuthContext } from "../context/AuthContext";
 
-export const LoginPage = () => {
-  const { login } = useAuth();
+const Login = () => {
+  const { isDesktopView } = useScreenSize();
+  const navigate = useNavigate();
+  const { login } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    login({
-      email: data.get("email"),
-      password: data.get("password")
-    });
+  const onFinish = async (values) => {
+    setIsLoading(true);
+    try {
+      const value = {
+        identifier: values.email,
+        password: values.password,
+      };
+      const response = await fetch(`${API}/auth/local`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(value),
+      });
+
+      const data = await response.json();
+      if (data?.error) {
+        throw data?.error;
+      } else {
+        // Set the data for the JWT token
+        setToken(data.jwt);
+
+        // Call the login function
+        login(data.jwt);
+
+        message.success(`Welcome back ${data.user.username}!`);
+
+        navigate("/user/profile", { replace: true });
+      }
+    } catch (error) {
+      console.error(error);
+      setError(error?.message ?? "Something went wrong!");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Log In
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Login In
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+    <Fragment>
+      <Row align="middle">
+        <Col span={isDesktopView ? 8 : 24} offset={isDesktopView ? 8 : 0}>
+          <Card title="SignIn">
+            {error ? (
+              <Alert
+                className="alert_error"
+                message={error}
+                type="error"
+                closable
+                afterClose={() => setError("")}
+              />
+            ) : null}
+            <Form
+              name="basic"
+              layout="vertical"
+              onFinish={onFinish}
+              autoComplete="off"
+            >
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    type: "email",
+                  },
+                ]}
+              >
+                <Input placeholder="Email address" />
+              </Form.Item>
+
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+              >
+                <Input.Password placeholder="Password" />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login_submit_btn"
+                >
+                  Login {isLoading && <Spin size="small" />}
+                </Button>
+              </Form.Item>
+            </Form>
+            <Typography.Paragraph className="form_help_text">
+              New to Social Cards? <Link to="/signup">Sign Up</Link>
+            </Typography.Paragraph>
+          </Card>
+        </Col>
+      </Row>
+    </Fragment>
   );
 };
+
+export default Login;

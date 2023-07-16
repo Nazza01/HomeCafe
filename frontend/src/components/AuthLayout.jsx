@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { useLoaderData, useOutlet, Await } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
 import Alert from "@mui/material/Alert";
-import { AuthProvider } from "../hooks/useAuth";
+import { AuthProvider } from "../context/AuthContext";
 
 export const AuthLayout = () => {
   const outlet = useOutlet();

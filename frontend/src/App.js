@@ -4,13 +4,10 @@ import {
 	createRoutesFromElements,
 	defer,
 } from "react-router-dom";
-
 import { AuthLayout } from "./components/AuthLayout";
-
 import { HomeLayout } from "./components/HomeLayout";
 import { HomePage } from "./pages/Home";
-import { LoginPage } from "./pages/Login";
-
+import LoginPage from "./pages/Login";
 import { ProtectedLayout } from "./components/ProtectedLayout";
 import { ProfilePage } from "./pages/Profile";
 import { OrderHistoryPage } from "./pages/OrderHistory";

@@ -7,18 +7,21 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-
 import Button from "@mui/material/Button";
-
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuthContext } from "../context/AuthContext";
 
 export const AppBar = ({ pages }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
-
+  const { user, logout } = useAuthContext();
+  
+  const handleLogout = () => {
+    logout();
+    navigate("/", { replace: true});
+  }
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -80,7 +83,7 @@ export const AppBar = ({ pages }) => {
                 </MenuItem>
               ))}
               {!!user && (
-                <MenuItem key={"logout"} onClick={logout}>
+                <MenuItem onClick={handleLogout}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               )}
@@ -106,8 +109,7 @@ export const AppBar = ({ pages }) => {
             ))}
             {!!user && (
               <Button
-                key={"logout"}
-                onClick={logout}
+                onClick={handleLogout}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {"logout"}

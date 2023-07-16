@@ -1,9 +1,9 @@
 import { Navigate, useOutlet } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuthContext } from "../context/AuthContext";
 import { AppBar } from "./AppBar";
 
 export const ProtectedLayout = () => {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   const outlet = useOutlet();
 
   if (!user) {
@@ -13,8 +13,10 @@ export const ProtectedLayout = () => {
   return (
     <div>
       <AppBar pages={[
-          { label: "Settings", path: "settings" },
-          { label: "Profile", path: "profile" }
+          { label: "Profile", path: "profile" },
+          { label: "Order History", path: "order-history" },
+          { label: "Cart", path: "cart" },
+          { label: "Menu", path: "menu" },
         ]} 
       />
       {outlet}

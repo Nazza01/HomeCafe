@@ -1,13 +1,13 @@
 import { Navigate, useOutlet } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuthContext } from "../context/AuthContext";
 import { AppBar } from "./AppBar";
 
 export const HomeLayout = () => {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   const outlet = useOutlet();
 
   if (user) {
-    return <Navigate to="/dashboard/profile" replace />;
+    return <Navigate to="/user/cart" replace />;
   }
 
   return (
