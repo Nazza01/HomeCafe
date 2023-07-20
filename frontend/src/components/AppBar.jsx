@@ -33,6 +33,17 @@ export const AppBar = ({ pages }) => {
     }
   };
 
+  const menuItemsToRender = () => {
+    {pages?.map((page) => (
+      <MenuItem
+        key={page.label}
+        onClick={() => handleCloseNavMenu(page.path)}
+      >
+        <Typography textAlign="center">{page.label}</Typography>
+      </MenuItem>
+    ))}
+  };
+  
   return (
     <MuiAppBar position="static">
       <Container maxWidth="xl">
@@ -74,14 +85,7 @@ export const AppBar = ({ pages }) => {
                 display: { xs: "block", md: "none" }
               }}
             >
-              {pages?.map((page) => (
-                <MenuItem
-                  key={page.label}
-                  onClick={() => handleCloseNavMenu(page.path)}
-                >
-                  <Typography textAlign="center">{page.label}</Typography>
-                </MenuItem>
-              ))}
+              {menuItemsToRender()}
               {!!user && (
                 <MenuItem onClick={handleLogout}>
                   <Typography textAlign="center">Logout</Typography>

@@ -3,8 +3,7 @@ import Home from "@mui/icons-material/Home";
 
 export const HomePage = () => {
   return (
-    <BasicPage title="Home Page" icon={<Home />}>
-      <h1>This is the Home Page</h1>
+    <BasicPage title="You must be logged in to do that!">
     </BasicPage>
   )
 };

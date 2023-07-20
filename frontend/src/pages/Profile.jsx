@@ -1,8 +1,13 @@
-import React from "react";
-import { Button, Card, Col, Form, Input, message, Row, Spin } from "antd";
+import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  TextField,
+  CircularProgress,
+  Stack,
+} from "@mui/material";
 import { useAuthContext } from "../context/AuthContext";
 import { API } from "../constant";
-import { useState } from "react";
 import { getToken } from "../helpers";
 import { useNavigate } from "react-router-dom";
 
@@ -10,10 +15,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const { user, isLoading, setUser } = useAuthContext();
   const navigate = useNavigate();
-  
-  const handleCancel = () => {
-    navigate("/menu");
-  }
+
   const handleProfileUpdate = async (data) => {
     setLoading(true);
     try {
@@ -29,84 +31,81 @@ const ProfilePage = () => {
       const responseData = await response.json();
 
       setUser(responseData);
-      message.success("Data saved successfully!");
+      alert("Data saved successfully!"); // Using alert instead of message.success for simplicity
     } catch (error) {
-      console.error(Error);
-      message.error("Error While Updating the Profile!");
+      console.error(error);
+      alert("Error While Updating the Profile!"); // Using alert instead of message.error for simplicity
     } finally {
       setLoading(false);
     }
   };
 
   if (isLoading) {
-    return <Spin size="large" />;
+    return <CircularProgress size="large" />;
   }
 
   return (
     <Card className="profile_page_card">
-      <Form
-        layout="vertical"
-        initialValues={{
-          username: user?.username,
-          email: user?.email,
-        }}
-        onFinish={handleProfileUpdate}
-      >
-        <Row gutter={[16, 16]}>
-          <Col md={8} lg={8} sm={24} xs={24}>
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Username is required!",
-                  type: "string",
-                },
-              ]}
-            >
-              <Input placeholder="Username" />
-            </Form.Item>
-          </Col>
-          <Col md={8} lg={8} sm={24} xs={24}>
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Email is required!",
-                  type: "email",
-                },
-              ]}
-            >
-              <Input placeholder="Email" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Button
-          className="profile_save_btn"
-          htmlType="submit"
-          type="primary"
-          size="large"
+      <form onSubmit={handleProfileUpdate}>
+        <Stack 
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          paddingTop={3}
         >
-          {loading ? (
-            <>
-              <Spin size="small" /> Saving
-            </>
-          ) : (
-            "Save"
-          )}
-        </Button>
-        <Button
-          htmlType="reset"
-          type="default"
-          size="large"
-          onSubmit={handleCancel}
+          <TextField
+            helperText="Please enter your new username"
+            label="Username"
+            name="username"
+            variant="outlined"
+            value={user?.username}
+            onChange={(e) =>
+              setUser((prevUser) => ({ ...prevUser, username: e.target.value }))
+            }
+            required
+          />
+          <TextField
+            helperText="Please enter your new Email"
+            label="Email"
+            name="email"
+            type="email"
+            variant="outlined"
+            value={user?.email}
+            onChange={(e) =>
+              setUser((prevUser) => ({ ...prevUser, email: e.target.value }))
+            }
+            required
+          />
+        </Stack>
+        <Stack 
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={3}
         >
-          Cancel
-        </Button>
-      </Form>
+          <Button
+            className="profile_save_btn"
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            {loading ? (
+              <>
+                <CircularProgress size={20} />
+                Saving
+              </>
+            ) : (
+              "Save"
+            )}
+          </Button>
+          <Button 
+            variant="outlined"
+            onClick={() => navigate("/user/menu")} 
+          >
+            Cancel
+          </Button>
+        </Stack>
+      </form>
     </Card>
   );
 };
