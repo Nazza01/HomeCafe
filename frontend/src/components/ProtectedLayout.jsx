@@ -1,6 +1,6 @@
 import { Navigate, useOutlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { AppBar } from "./AppBar";
+import { AppNavbar } from "./AppNavbar";
 
 export const ProtectedLayout = () => {
   const { user } = useAuthContext();
@@ -12,7 +12,7 @@ export const ProtectedLayout = () => {
 
   return (
     <div>
-      <AppBar pages={[
+      <AppNavbar pages={[
           { label: "Menu", path: "menu" },
           { label: "Cart", path: "cart" },
           { label: "Profile", path: "profile" },

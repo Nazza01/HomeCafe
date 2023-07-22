@@ -1,6 +1,6 @@
 import { Navigate, useOutlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { AppBar } from "./AppBar";
+import { AppNavbar } from "./AppNavbar";
 
 export const HomeLayout = () => {
   const { user } = useAuthContext();
@@ -12,7 +12,7 @@ export const HomeLayout = () => {
 
   return (
     <div>
-      <AppBar 
+      <AppNavbar
         pages={[
           { label: 'Home', path: "/"},
           { label: 'Login', path: "/login"},

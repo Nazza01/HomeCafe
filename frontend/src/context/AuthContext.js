@@ -12,12 +12,14 @@ export const AuthProvider = ({ children }) => {
 		// Check if the token exists, if it does set the user state accordingly
 		if (token) {
 			setUser({ token });
+		} else {
+			setUser(null);
 		}
 	}, []);
 
 	const login = (token) => {
 		setToken(token);
-		setUser({ user });
+		setUser({ token });
 	};
 
 	const logout = () => {

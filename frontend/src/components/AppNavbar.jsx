@@ -1,5 +1,5 @@
 import * as React from "react";
-import MuiAppBar from "@mui/material/AppBar";
+import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -12,7 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
-export const AppBar = ({ pages }) => {
+export const AppNavbar = ({ pages }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();
   const { user, logout } = useAuthContext();
@@ -28,24 +28,13 @@ export const AppBar = ({ pages }) => {
 
   const handleCloseNavMenu = (path) => {
     setAnchorElNav(null);
-    if (path) {
+    if (path && path !== "#") {
       navigate(path);
     }
   };
 
-  const menuItemsToRender = () => {
-    {pages?.map((page) => (
-      <MenuItem
-        key={page.label}
-        onClick={() => handleCloseNavMenu(page.path)}
-      >
-        <Typography textAlign="center">{page.label}</Typography>
-      </MenuItem>
-    ))}
-  };
-  
   return (
-    <MuiAppBar position="static">
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -80,12 +69,16 @@ export const AppBar = ({ pages }) => {
                 horizontal: "left"
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={() => handleCloseNavMenu(null)}
               sx={{
                 display: { xs: "block", md: "none" }
               }}
             >
-              {menuItemsToRender()}
+              {pages?.map((page) => (
+                <MenuItem key={page.path} onClick={() => handleCloseNavMenu(page.path)}>
+                  <Typography textAlign="center">{page.label}</Typography>
+                </MenuItem>
+              ))}
               {!!user && (
                 <MenuItem onClick={handleLogout}>
                   <Typography textAlign="center">Logout</Typography>
@@ -104,7 +97,7 @@ export const AppBar = ({ pages }) => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages?.map((page) => (
               <Button
-                key={page.label}
+                key={page.path}
                 onClick={() => handleCloseNavMenu(page.path)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
@@ -122,6 +115,6 @@ export const AppBar = ({ pages }) => {
           </Box>
         </Toolbar>
       </Container>
-    </MuiAppBar>
+    </AppBar>
   );
 };

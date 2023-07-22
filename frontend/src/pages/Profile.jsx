@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import { useAuthContext } from "../context/AuthContext";
 import { API } from "../constant";
-import { getToken } from "../helpers";
 import { useNavigate } from "react-router-dom";
+import { getToken } from "../hooks/useLocalStorage";
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
