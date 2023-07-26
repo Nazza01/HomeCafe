@@ -7,14 +7,13 @@ export const HomeLayout = () => {
   const outlet = useOutlet();
 
   if (user) {
-    return <Navigate to="/user/cart" replace />;
+    return <Navigate to="/user/menu" replace />;
   }
 
   return (
     <div>
       <AppNavbar
         pages={[
-          { label: 'Home', path: "/"},
           { label: 'Login', path: "/login"},
         ]}
       />

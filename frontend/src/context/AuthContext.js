@@ -27,8 +27,12 @@ export const AuthProvider = ({ children }) => {
 		setUser(null); // Update the user state immediately after removing the token
 	};
 
+	const getUser = () => {
+		return user;
+	};
+
 	return (
-		<AuthContext.Provider value={{ user, login, logout }}>
+		<AuthContext.Provider value={{ user, login, logout, getUser }}>
 			{children}
 		</AuthContext.Provider>
 	);

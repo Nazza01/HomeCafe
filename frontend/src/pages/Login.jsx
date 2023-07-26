@@ -48,7 +48,7 @@ const Login = () => {
         // Call the login function
         login(data.jwt);
 
-        message.success(`Welcome back ${data.user.username}!`);
+        message.success(`Welcome back ${data.user.username}!`, 1);
 
         navigate("/user/menu", { replace: true });
       }
