@@ -34,11 +34,9 @@
       "targetField": "name"
     },
     "menuType": {
-      "type": "enumeration",
-      "enum": [
-        "Coffee",
-        "Desserts"
-      ]
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::menu-type.menu-type"
     }
   }
 }

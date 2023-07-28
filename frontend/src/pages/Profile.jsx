@@ -43,7 +43,6 @@ const ProfilePage = () => {
   if (isLoading) {
     return <CircularProgress size="large" />;
   }
-
   return (
     <Card className="profile_page_card">
       <form onSubmit={handleProfileUpdate}>

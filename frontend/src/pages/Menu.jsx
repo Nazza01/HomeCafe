@@ -1,34 +1,36 @@
-import React, { useState } from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { API } from "../constant";
+import { getToken } from "../hooks/useLocalStorage";
 
-function Menu() {
-  const [age, setAge] = useState('');
+const MenuList = () => {
+  const [error, setError] = useState(null);
+  const [menuTypes, setMenuTypes] = useState([]);
   
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const config = {
+    headers: { Authorization: `Bearer ${getToken()}` }
   };
   
+  useEffect(() => {
+    axios
+      .get(`${API}/menu-types`, config)
+      .then(({ data }) => setMenuTypes(data.data))
+      .catch((error) => setError(error));
+  }, []);
+      
+  if (error) {
+    return <div> An error occurred: {error.message} </div>;
+  }
+
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 80 }}>
-        <InputLabel id="demo-simple-select-autowidth-label">Order Type</InputLabel>
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          value={age}
-          onChange={handleChange}
-          autoWidth
-          label="Age"
-        >
-          <MenuItem value="coffee">Coffee</MenuItem>
-          <MenuItem value="desserts">Desserts</MenuItem>
-        </Select>
-      </FormControl>
+      <ul>
+        {menuTypes.map(({ id, attributes }) => (
+          <li key={id}>{attributes.name}</li>
+        ))}
+      </ul>
     </div>
-  );
-}
+  )
+};
 
-export default Menu;
+export default MenuList;
