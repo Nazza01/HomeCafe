@@ -1,80 +1,68 @@
-import axios from "axios";
-import PropTypes from 'prop-types';
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { Tabs, Tab } from '@mui/material';
+import axios from 'axios';
 import { API } from "../constant";
 import { getToken } from "../hooks/useLocalStorage";
-import Box from "@mui/material/Box";
-import Tabs, { tabsClasses } from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from "@mui/material/Typography";
 
-function TabPanel({ children, value, index, ...other }) {
-  return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-const MenuList = () => {
-  const [value, setValue] = useState(0);
-  const [error, setError] = useState(null);
+const MenuPage = () => {
   const [menuTypes, setMenuTypes] = useState([]);
-  
+  const [menuItems, setMenuItems] = useState([]);
+  const [selectedMenuType, setSelectedMenuType] = useState("");
+
   const config = {
     headers: { Authorization: `Bearer ${getToken()}` }
   };
   
-  const handleChange = (_value, newValue) => {
-    setValue(newValue);
+  useEffect(() => {
+    const axiosInstance = axios.create({
+      baseURL: `${API}`,
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      },
+    });
+    axiosInstance.get("menu-types")
+      .then((response) => {
+        setMenuTypes(response.data.data);
+        console.log(menuTypes);
+        setSelectedMenuType(response.data.data[0].name);
+      })
+      .catch((error) => {
+        console.error("Error fetching menu types:", error);
+      });
+    axiosInstance.get("menu-items?populate[0]=menuType")
+      .then((response) => {
+        setMenuItems(response.data.data);
+        console.log(menuItems);
+      })
+      .catch((error) => {
+        console.error("Error fetching menu items:", error);
+      });
+  }, []);
+  
+  const handleTabChange = (event, newValue) => {
+    setSelectedMenuType(menuTypes[newValue].name);
   };
   
-  useEffect(() => {
-    axios
-      .get(`${API}/menu-types`, config)
-      .then(({ data }) => setMenuTypes(data.data))
-      .catch((error) => setError(error));
-  }, []);
-      
-  if (error) {
-    return <div> An error occurred: {error.message} </div>;
-  }
-
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        bgcolor: 'background.paper',
-        display: 'flex',
-        height: 224
-      }}
-    >
+    <div>
       <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="tab section describing all different types of elements"
-        sx={{
-          borderRight: 1,
-          borderColor: 'divider'
-        }}
+        value={menuTypes.findIndex((type) => type.name === selectedMenuType)}
+        onChange={handleTabChange}
       >
-        {menuTypes.map(({ id, attributes }) => (
-          <Tab key={id} label={attributes.name} />
+        {menuTypes.map((menuType) => (
+          <Tab key={menuType.id} label={menuType.name} />
         ))}
       </Tabs>
-      {menuTypes.map(({ id, attributes }) => (
-        <TabPanel key={id} value={attributes} index={id}>
-          {attributes.slug}
-        </TabPanel>
-      ))}
-    </Box>
+      <ul>
+        {menuItems
+          .filter((menuItem) => menuItem.menuType === selectedMenuType)
+          .map((menuItem) => (
+            <li key={menuItem.id}>{menuItem.name}</li>
+          ))
+        }
+      </ul>
+    </div>
   )
 };
 
-export default MenuList;
+export default MenuPage;

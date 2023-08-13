@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * coffee-bean service
+ * menu-item service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::coffee-bean.coffee-bean');
+module.exports = createCoreService('api::menu-item.menu-item');

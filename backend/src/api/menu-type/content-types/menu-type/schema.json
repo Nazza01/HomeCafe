@@ -4,8 +4,7 @@
   "info": {
     "singularName": "menu-type",
     "pluralName": "menu-types",
-    "displayName": "menuType",
-    "description": ""
+    "displayName": "Menu Type"
   },
   "options": {
     "draftAndPublish": true
