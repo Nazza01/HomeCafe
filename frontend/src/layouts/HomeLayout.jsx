@@ -1,6 +1,6 @@
 import { Navigate, useOutlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { AppNavbar } from "./AppNavbar";
+import { AppNavbar } from "../components/navigation/AppNavbar";
 
 export const HomeLayout = () => {
   const { user } = useAuthContext();

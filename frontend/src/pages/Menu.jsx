@@ -1,67 +1,87 @@
-import React, { useState, useEffect } from 'react';
-import { Tabs, Tab } from '@mui/material';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Tabs, Tab, Grid } from '@mui/material';
 import axios from 'axios';
 import { API } from "../constant";
 import { getToken } from "../hooks/useLocalStorage";
+import CardComponent from 'components/content/CardComponent';
 
 const MenuPage = () => {
   const [menuTypes, setMenuTypes] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const [selectedMenuType, setSelectedMenuType] = useState("");
-
-  const config = {
-    headers: { Authorization: `Bearer ${getToken()}` }
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   
   useEffect(() => {
-    const axiosInstance = axios.create({
-      baseURL: `${API}`,
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      },
-    });
-    axiosInstance.get("menu-types")
-      .then((response) => {
-        setMenuTypes(response.data.data);
-        console.log(menuTypes);
-        setSelectedMenuType(response.data.data[0].name);
-      })
-      .catch((error) => {
-        console.error("Error fetching menu types:", error);
+    const fetchData = async () => {
+      const axiosInstance = axios.create({
+        baseURL: `${API}`,
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        },
       });
-    axiosInstance.get("menu-items?populate[0]=menuType")
-      .then((response) => {
-        setMenuItems(response.data.data);
-        console.log(menuItems);
-      })
-      .catch((error) => {
-        console.error("Error fetching menu items:", error);
-      });
+      setIsError(false);
+      setIsLoading(true);
+      
+      try {
+        const getMenuTypes = await axiosInstance.get("menu-types");
+        setMenuTypes(getMenuTypes.data.data);
+        
+        const getMenuItems = await axiosInstance.get("menu-items?populate=menuType&populate=image");
+        setMenuItems(getMenuItems.data.data);
+        setSelectedMenuType(getMenuTypes.data.data[0].attributes.name);
+      } catch (error) {
+        setIsError(true);
+      }
+      setIsLoading(false);
+    }
+    
+    fetchData();
   }, []);
   
   const handleTabChange = (event, newValue) => {
-    setSelectedMenuType(menuTypes[newValue].name);
+    setSelectedMenuType(menuTypes[newValue].attributes.name);
   };
-  
   return (
-    <div>
-      <Tabs
-        value={menuTypes.findIndex((type) => type.name === selectedMenuType)}
-        onChange={handleTabChange}
-      >
-        {menuTypes.map((menuType) => (
-          <Tab key={menuType.id} label={menuType.name} />
-        ))}
-      </Tabs>
-      <ul>
-        {menuItems
-          .filter((menuItem) => menuItem.menuType === selectedMenuType)
-          .map((menuItem) => (
-            <li key={menuItem.id}>{menuItem.name}</li>
-          ))
-        }
-      </ul>
-    </div>
+    <Grid
+      container
+      flexDirection="column"
+    >
+      {
+        isError && <div>Something went wrong ...</div>
+      }
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <Tabs
+            value={menuTypes.findIndex((type) => type.attributes.name === selectedMenuType)}
+            onChange={handleTabChange}
+          >
+            {menuTypes.map((type) => (
+                <Tab key={type.id} label={type.attributes.name} />
+              ))
+            }
+          </Tabs>
+          <ul style={{ paddingTop: 5 + '%' }}>
+            {menuItems
+              .filter((menuItem) => menuItem.attributes.menuType.data.attributes.name === selectedMenuType)
+              .map((menuItem) => (
+                <Grid key={menuItem.id}>
+                  <CardComponent
+                    key={menuItem.id}
+                    image={menuItem.attributes.image.url}
+                    title={menuItem.attributes.name}
+                    description={menuItem.attributes.description}
+                    altText={menuItem.attributes.altText}
+                  />
+                </Grid>
+              ))
+            }
+          </ul>
+        </>
+      )}
+    </Grid>
   )
 };
 

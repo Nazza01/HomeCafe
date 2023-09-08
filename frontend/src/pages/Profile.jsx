@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import {
   Button,
-  Card,
   TextField,
   CircularProgress,
   Stack,
+  Grid,
 } from "@mui/material";
 import { useAuthContext } from "../context/AuthContext";
 import { API } from "../constant";
@@ -44,7 +44,12 @@ const ProfilePage = () => {
     return <CircularProgress size="large" />;
   }
   return (
-    <Card className="profile_page_card">
+    <Grid
+      container
+      flexDirection="column"
+      alignItems="center"
+      
+    >
       <form onSubmit={handleProfileUpdate}>
         <Stack 
           direction="row"
@@ -105,7 +110,7 @@ const ProfilePage = () => {
           </Button>
         </Stack>
       </form>
-    </Card>
+    </Grid>
   );
 };
 

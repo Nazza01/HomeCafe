@@ -1,6 +1,5 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -11,11 +10,10 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 export const AppNavbar = ({ pages }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const { user, logout } = useAuthContext();
   
@@ -35,17 +33,6 @@ export const AppNavbar = ({ pages }) => {
     }
   };
   
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  
-  const handleCloseUserMenu = (path) => {
-    setAnchorElNav(null);
-    if (path && path !== "#") {
-      navigate(path);
-    }
-  };
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -140,28 +127,6 @@ export const AppNavbar = ({ pages }) => {
               >
                 {"logout"}
               </Button>
-            )}
-            {!!user && (
-              <Menu 
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={() => handleCloseUserMenu(null)}
-              >
-                <MenuItem key="Profile" onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Profile</Typography>
-                </MenuItem>
-              </Menu>
             )}
           </Box>
         </Toolbar>

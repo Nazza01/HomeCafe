@@ -4,7 +4,8 @@
   "info": {
     "singularName": "menu-item",
     "pluralName": "menu-items",
-    "displayName": "Menu Item"
+    "displayName": "Menu Item",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -21,6 +22,16 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::menu-type.menu-type"
+    },
+    "altText": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

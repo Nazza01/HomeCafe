@@ -4,10 +4,10 @@ import {
 	createRoutesFromElements,
 	defer,
 } from "react-router-dom";
-import { AuthLayout } from "./components/AuthLayout";
-import { HomeLayout } from "./components/HomeLayout";
+import { AuthLayout } from "./layouts/AuthLayout";
+import { HomeLayout } from "./layouts/HomeLayout";
 import { HomePage } from "./pages/Home";
-import { ProtectedLayout } from "./components/ProtectedLayout";
+import { ProtectedLayout } from "./layouts/ProtectedLayout";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
 import MenuPage from "./pages/Menu";
@@ -17,7 +17,7 @@ import { NotFoundPage } from "./pages/NotFound";
 
 import "./styles.css";
 
-const getUserData = () =>
+const getUserData = () => 
 	new Promise((resolve) =>
 		setTimeout(() => {
 			const user = window.localStorage.getItem("user");
