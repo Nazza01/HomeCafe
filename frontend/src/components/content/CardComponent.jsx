@@ -15,7 +15,7 @@ const CardComponent = ({
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
+          height="240"
           image={image}
           alt={altText ? altText : "No alt text provided"}
         />

@@ -64,22 +64,22 @@ const MenuPage = () => {
               ))
             }
           </Tabs>
-          <ul style={{ paddingTop: 5 + '%' }}>
+          <Grid container spacing={2} >
             {menuItems
               .filter((menuItem) => menuItem.attributes.menuType.data.attributes.name === selectedMenuType)
               .map((menuItem) => (
-                <Grid key={menuItem.id}>
+                <Grid xs display="flex" justifyContent="center" alignContent="center" key={menuItem.id} item md={3}>
                   <CardComponent
                     key={menuItem.id}
-                    image={`http://localhost:1337${menuItem.attributes.image.data.attributes.url}`}
+                    image={`http://localhost:1337${menuItem.attributes.image.data.attributes.formats.medium.url}`}
                     title={menuItem.attributes.name}
                     description={menuItem.attributes.description}
                     altText={menuItem.attributes.altText}
-                  />
+                    />
                 </Grid>
               ))
             }
-          </ul>
+          </Grid>
         </>
       )}
     </Grid>
