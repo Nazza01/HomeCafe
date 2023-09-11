@@ -11,12 +11,12 @@ const CardComponent = ({
   image, title, description, altText
 }) => {
   return (
-    <Card sx={{ maxWidth: 345, paddingTop: 5 + '%' }}>
+    <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia
           component="img"
           height="140"
-          src={image}
+          image={image}
           alt={altText ? altText : "No alt text provided"}
         />
         <CardContent>

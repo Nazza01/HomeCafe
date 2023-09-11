@@ -8,6 +8,7 @@ import CardComponent from 'components/content/CardComponent';
 const MenuPage = () => {
   const [menuTypes, setMenuTypes] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
+  
   const [selectedMenuType, setSelectedMenuType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -70,7 +71,7 @@ const MenuPage = () => {
                 <Grid key={menuItem.id}>
                   <CardComponent
                     key={menuItem.id}
-                    image={menuItem.attributes.image.url}
+                    image={`http://localhost:1337${menuItem.attributes.image.data.attributes.url}`}
                     title={menuItem.attributes.name}
                     description={menuItem.attributes.description}
                     altText={menuItem.attributes.altText}
