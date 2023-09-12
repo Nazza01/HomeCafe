@@ -15,8 +15,6 @@ import { OrderHistoryPage } from "./pages/OrderHistory";
 import { CartPage } from "./pages/Cart";
 import { NotFoundPage } from "./pages/NotFound";
 
-import "./styles.css";
-
 const getUserData = () => 
 	new Promise((resolve) =>
 		setTimeout(() => {

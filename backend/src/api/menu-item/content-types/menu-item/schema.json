@@ -13,10 +13,14 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 64
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 256
     },
     "menuType": {
       "type": "relation",
@@ -24,14 +28,18 @@
       "target": "api::menu-type.menu-type"
     },
     "altText": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 64
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

@@ -15,7 +15,6 @@ export const ProtectedLayout = () => {
       <AppNavbar pages={[
           { label: "Menu", path: "menu" },
           { label: "Cart", path: "cart" },
-          { label: "Profile", path: "profile" },
           { label: "Order History", path: "order-history" },
         ]} 
       />
