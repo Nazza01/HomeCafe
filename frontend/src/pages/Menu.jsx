@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, Tab, Grid } from '@mui/material';
 import axios from 'axios';
 import { API } from "../constant";
@@ -44,44 +44,40 @@ const MenuPage = () => {
     setSelectedMenuType(menuTypes[newValue].attributes.name);
   };
   return (
-    <Grid
-      container
-      flexDirection="column"
-    >
+    <>
       {
         isError && <div>Something went wrong ...</div>
       }
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <>
+        <Grid container flexDirection="column" alignContent="center">
           <Tabs
             value={menuTypes.findIndex((type) => type.attributes.name === selectedMenuType)}
             onChange={handleTabChange}
+            centered
           >
             {menuTypes.map((type) => (
                 <Tab key={type.id} label={type.attributes.name} />
               ))
             }
           </Tabs>
-          <Grid container sx={{height: '100vh'}} height="100vh" display="flex" justifyContent="center" alignContent="center" spacing={4} direction="row">
-            {menuItems
-              .filter((menuItem) => menuItem.attributes.menuType.data.attributes.name === selectedMenuType)
-              .map((menuItem) => (
-                <Grid key={menuItem.id} item >
-                  <CardComponent
-                    image={menuItem.attributes.image.data?.attributes.url}
-                    title={menuItem.attributes.name}
-                    description={menuItem.attributes.description}
-                    altText={menuItem.attributes.altText}
-                  />
-                </Grid>
-              ))
-            }
-          </Grid>
-        </>
+          {menuItems
+            .filter((menuItem) => menuItem.attributes.menuType.data.attributes.name === selectedMenuType)
+            .map((menuItem) => (
+              <Grid item key={menuItem.id} paddingY={2}>
+                <CardComponent
+                  image={menuItem.attributes.image.data?.attributes.url}
+                  title={menuItem.attributes.name}
+                  description={menuItem.attributes.description}
+                  altText={menuItem.attributes.altText}
+                />
+              </Grid>
+            ))
+          }
+        </Grid>
       )}
-    </Grid>
+    </>
   )
 };
 

@@ -6,8 +6,7 @@ import {
 	Typography
 } from '@mui/material';
 import { CardActionArea } from '@mui/material';
-import SimpleDialog from './SimpleDialog';
-import { Button } from 'react-bootstrap';
+import OrderDialog from './OrderDialog';
 
 const CardComponent = ({
   image, title, description, altText
@@ -41,11 +40,12 @@ const CardComponent = ({
           </Typography>
         </CardContent>
       </CardActionArea>
-      <SimpleDialog 
+      <OrderDialog
         dialogTitle={`Order ${title}`}
         buttonText={`Add to cart`}
         open={open}
         onClose={handleDialogClose}
+        name={title}
       />
     </Card>
   );

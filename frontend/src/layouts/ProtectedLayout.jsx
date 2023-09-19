@@ -1,6 +1,6 @@
 import { Navigate, useOutlet } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { AppNavbar } from "../components/navigation/AppNavbar";
+import { AppNavbar } from "../components/AppNavbar";
 
 export const ProtectedLayout = () => {
   const { user } = useAuthContext();
