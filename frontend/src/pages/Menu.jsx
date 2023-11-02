@@ -3,7 +3,7 @@ import { Tabs, Tab, Grid } from '@mui/material';
 import axios from 'axios';
 import { API } from "../constant";
 import { getToken } from "../hooks/useLocalStorage";
-import CardComponent from 'components/CardComponent';
+import OrderCardComponent from '../components/OrderCardComponent';
 
 const MenuPage = () => {
   const [menuTypes, setMenuTypes] = useState([]);
@@ -66,11 +66,13 @@ const MenuPage = () => {
             .filter((menuItem) => menuItem.attributes.menuType.data.attributes.name === selectedMenuType)
             .map((menuItem) => (
               <Grid item key={menuItem.id} paddingY={2}>
-                <CardComponent
+                <OrderCardComponent
                   image={menuItem.attributes.image.data?.attributes.url}
                   title={menuItem.attributes.name}
                   description={menuItem.attributes.description}
                   altText={menuItem.attributes.altText}
+                  dialogTitle="Order"
+                  dialogButtonText="Add to Cart"
                 />
               </Grid>
             ))

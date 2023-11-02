@@ -14,9 +14,10 @@ import axios from "axios";
 import { useState } from "react";
 import { API } from "../constant";
 import { getToken } from "../hooks/useLocalStorage";
+import { toast } from "react-toastify";
 
 const OrderDialog = ({
-	onClose, open, buttonText, dialogTitle, name
+	onClose, open, buttonText, dialogTitle, name, userId
 }) => {
 	
 	const [size, setSize] = useState('');
@@ -25,12 +26,13 @@ const OrderDialog = ({
 		setSize(event.target.value);
 	}
 	
-	//TODO: Add confirmation that the item has been added to the cart - use toast notifications to display this
+	//TODO: add current user ID to base the cart based on their userId
 	const addToCart = async (name, size) => {
 		let data = JSON.stringify({
 			"data": {
-				"name": name,
-				"size": size
+				name,
+				size,
+				userId
 			}
 		});
 		
@@ -46,6 +48,17 @@ const OrderDialog = ({
 		
 		try {
 			await axios.request(config);
+			toast.success('Item added to cart!', {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: false,
+				progress: undefined,
+				theme: "light"
+			});
+			onClose();
 		} catch (error) {
 			console.log(error)
 		}
@@ -72,7 +85,7 @@ const OrderDialog = ({
 					<Select
 						labelId="demo-select-small-label"
 						id="demo-select-small"
-						value={size ? size : "Regular"}
+						value={size}
 						label="Size"
 						onChange={sizeChange}
 					>

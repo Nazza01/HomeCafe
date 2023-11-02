@@ -11,17 +11,21 @@ import { ProtectedLayout } from "./layouts/ProtectedLayout";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
 import MenuPage from "./pages/Menu";
+import CartPage from "./pages/Cart";
 import { OrderHistoryPage } from "./pages/OrderHistory";
-import { CartPage } from "./pages/Cart";
 import { NotFoundPage } from "./pages/NotFound";
 
-const getUserData = () => 
-	new Promise((resolve) =>
+const getUserData = () => new Promise((resolve) => {
 		setTimeout(() => {
 			const user = window.localStorage.getItem("user");
-			resolve(user);
-		}, 500)
-	);
+			if (user) {
+				resolve(user);
+			} else {
+				resolve(null);
+			}
+		}, 200)
+	}
+);
 
 export const router = createBrowserRouter(
 	createRoutesFromElements(

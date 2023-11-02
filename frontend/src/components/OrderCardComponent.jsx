@@ -8,7 +8,7 @@ import {
 import { CardActionArea } from '@mui/material';
 import OrderDialog from './OrderDialog';
 
-const CardComponent = ({
+const OrderCardComponent = ({
   image, 
   title, 
   description, 
@@ -56,4 +56,4 @@ const CardComponent = ({
   );
 }
 
-export default CardComponent;
+export default OrderCardComponent;
