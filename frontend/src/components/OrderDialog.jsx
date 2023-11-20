@@ -1,54 +1,60 @@
 import { Close } from "@mui/icons-material";
-import { 
-	Button, 
-	Dialog, 
-	DialogTitle, 
-	FormControl, 
-	Grid, 
-	IconButton, 
-	InputLabel, 
-	MenuItem, 
-	Select } 
-from "@mui/material";
+import {
+	Button,
+	Dialog,
+	DialogTitle,
+	FormControl,
+	Grid,
+	IconButton,
+	InputLabel,
+	MenuItem,
+	Select,
+} from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { API } from "../constant";
 import { getToken } from "../hooks/useLocalStorage";
-import { toast } from "react-toastify";
 
 const OrderDialog = ({
-	onClose, open, buttonText, dialogTitle, name, userId
+	onClose,
+	open,
+	buttonText,
+	dialogTitle,
+	name,
+	userId,
+	image,
 }) => {
-	
-	const [size, setSize] = useState('');
-	
+	const [size, setSize] = useState("");
+
 	const sizeChange = (event) => {
 		setSize(event.target.value);
-	}
-	
+	};
+
 	//TODO: add current user ID to base the cart based on their userId
 	const addToCart = async (name, size) => {
 		let data = JSON.stringify({
-			"data": {
+			data: {
 				name,
 				size,
-				userId
-			}
+				userId,
+				image,
+			},
 		});
-		
+
 		let config = {
-			method: 'post',
+			method: "post",
 			url: `${API}/carts`,
 			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${getToken()}`
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${getToken()}`,
 			},
 			data: data,
-		}
-		
+		};
+
 		try {
 			await axios.request(config);
-			toast.success('Item added to cart!', {
+			toast.success("Item added to cart!", {
 				position: "top-center",
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -56,28 +62,25 @@ const OrderDialog = ({
 				pauseOnHover: false,
 				draggable: false,
 				progress: undefined,
-				theme: "light"
+				theme: "light",
 			});
 			onClose();
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-	}
-	
+	};
+
 	return (
-		<Dialog onClose={onClose} open={open} fullWidth maxWidth='xs'>
+		<Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
 			<Grid container direction="column">
-				<DialogTitle sx={{ m: 0, p:2 }}>
-					{dialogTitle}
-				</DialogTitle>
+				<DialogTitle sx={{ m: 0, p: 2 }}>{dialogTitle}</DialogTitle>
 				<IconButton
 					onClick={onClose}
 					sx={{
-						position: 'absolute',
+						position: "absolute",
 						right: 8,
 						top: 8,
-					}}
-				>
+					}}>
 					<Close />
 				</IconButton>
 				<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
@@ -87,20 +90,26 @@ const OrderDialog = ({
 						id="demo-select-small"
 						value={size}
 						label="Size"
-						onChange={sizeChange}
-					>
+						onChange={sizeChange}>
 						<MenuItem value={"Regular"}>Regular</MenuItem>
 						<MenuItem value={"Large"}>Large</MenuItem>
 					</Select>
 				</FormControl>
-				<Grid display="flex" alignItems="center" justifyContent="center" paddingY={2}>
-					<Button variant="contained" size="large" onClick={() => addToCart(name, size)}>
+				<Grid
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
+					paddingY={2}>
+					<Button
+						variant="contained"
+						size="large"
+						onClick={() => addToCart(name, size)}>
 						{buttonText}
 					</Button>
 				</Grid>
 			</Grid>
 		</Dialog>
-	)
+	);
 };
 
 export default OrderDialog;

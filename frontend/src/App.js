@@ -27,6 +27,7 @@ const getUserData = () => new Promise((resolve) => {
 	}
 );
 
+
 export const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route

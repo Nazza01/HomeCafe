@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
+
 export const AppNavbar = ({ pages }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();

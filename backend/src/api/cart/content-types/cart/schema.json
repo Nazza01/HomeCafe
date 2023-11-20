@@ -22,6 +22,9 @@
         "Regular",
         "Large"
       ]
+    },
+    "image": {
+      "type": "string"
     }
   }
 }
